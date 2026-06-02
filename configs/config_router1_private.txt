@@ -1,0 +1,11 @@
+=== ROUTER1 (private/NAT Interne) ===
+
+hostname private
+
+interface fastEthernet 0/0
+ip address 172.16.255.254 255.255.0.0
+no shutdown
+
+interface fastEthernet 1/0
+ip address 10.0.0.2 255.255.255.248
+no shutdown

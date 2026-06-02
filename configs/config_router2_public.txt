@@ -1,0 +1,11 @@
+=== ROUTER2 (public/NAT Externe) ===
+
+hostname public
+
+interface fastEthernet 0/0
+ip address 10.0.0.1 255.255.255.248
+no shutdown
+
+interface fastEthernet 1/0
+ip address 216.90.80.254 255.255.255.0
+no shutdown
