@@ -9,3 +9,16 @@ no shutdown
 interface fastEthernet 1/0
 ip address 10.0.0.2 255.255.255.248
 no shutdown
+
+
+==== configuration du routage avec rip ====
+
+enable
+configure terminal
+router rip
+version 2
+network 10.0.0.0
+network 172.16.0.0
+no auto-summary
+exit
+end

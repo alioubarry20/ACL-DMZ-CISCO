@@ -9,3 +9,22 @@ no shutdown
 interface fastEthernet 1/0
 ip address 216.90.80.254 255.255.255.0
 no shutdown
+
+
+
+====configuration du routage avec RIP====
+enable
+configure terminal
+router rip
+version 2
+network 216.90.80.0
+network 10.0.0.0
+no auto-summary
+exit
+end
+
+// obliger d'utiliser le routage static car le modem SDL et le cloudPT sont des equipement de couche 2 qui envois uniquement des trame il ne laisse pas passer le routage RIP
+configure terminal
+ip route 216.90.90.0 255.255.255.0 216.90.80.252
+ip route 216.90.100.0 255.255.255.0 216.90.80.252
+end

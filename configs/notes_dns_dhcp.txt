@@ -1,0 +1,12 @@
+=== DHCP (Server1) ===
+Pool : entreprise
+Gateway : 172.16.255.254
+DNS : 172.16.0.1
+Start IP : 172.16.0.2
+Masque : 255.255.0.0
+
+=== DNS Server0 (public) ===
+www.entreprise.com → 216.90.80.253
+
+=== DNS Server1 (interne) ===
+www.entreprise.com → 10.0.0.3
