@@ -22,3 +22,26 @@ network 172.16.0.0
 no auto-summary
 exit
 end
+
+
+
+// configuration ACL sur le routeur de l'entreprise 
+
+==ACL 101 — En entrée (ce qui sort du réseau entreprise)
+
+enable
+configure terminal
+access-list 101 permit ip 172.16.0.0 0.0.255.255 any
+
+== ACL 100 — En sortie (ce qui entre dans le réseau entreprise)
+
+access-list 100 permit tcp any 172.16.0.0 0.0.255.255 established
+access-list 100 permit icmp 10.0.0.0 0.0.0.7 172.16.0.0 0.0.255.255
+access-list 100 permit icmp any 172.16.0.0 0.0.255.255 echo-reply
+
+== Activation sur l'interface Fa0/0
+interface fastEthernet 0/0
+ip access-group 101 in
+ip access-group 100 out
+exit
+end
