@@ -53,3 +53,49 @@ access-list 1 permit 172.16.0.0 0.0.255.255
 ip nat inside source list 1 interface fastEthernet 1/0 overload
 
 end
+
+// Section 4.5 Protection de la DMZ
+
+/*
+La DMZ héberge Server2 (www.entreprise.com). Elle est accessible depuis internet MAIS on doit :
+Laisser passer uniquement le HTTP (port 80) depuis internet vers le serveur web
+Laisser passer le RIP pour que les routeurs maintiennent leurs tables de routage
+Laisser passer ICMP en réponse pour l'administration réseau
+Bloquer tout le reste depuis internet
+*/
+
+//configuration de l ACL 111 sur le routeur 
+ACL 111 — En entrée sur Fa0/0 (côté DMZ)
+
+enable
+configure terminal
+
+access-list 111 permit tcp any host 216.90.80.253 eq 80
+access-list 111 permit tcp any 10.0.0.0 0.0.0.7 established
+access-list 111 permit icmp any 10.0.0.0 0.0.0.7 echo-reply
+access-list 111 permit icmp 172.16.0.0 0.0.255.255 10.0.0.0 0.0.0.7
+
+//Activation sur l'interface Fa1/0
+
+interface fastEthernet 1/0
+ip access-group 111 in
+exit
+end
+
+
+// conclusion 
+"Le serveur web de l'entreprise devra aussi héberger un serveur FTP. Quelles sont les règles à ajouter ?"
+Puisque le serveur FTP est sur Server2 (même machine que le serveur web), il faut autoriser le trafic FTP depuis internet vers 216.90.80.253 :
+
+// on vas ajouter  juste les 2 regles la pour que l on puisse ajouter un server TFP
+configure terminal
+access-list 111 permit tcp any host 216.90.80.253 eq 21
+access-list 111 permit tcp any host 216.90.80.253 eq 20
+end
+
+
+// reponse literraire a la question:
+Pour héberger un serveur FTP sur le même serveur web, il faut ajouter deux règles à l'ACL 111
+sur Router2 : autoriser le TCP port 21 (contrôle FTP) et le TCP port 20 (données FTP)
+vers l'adresse publique 216.90.80.253. Ces règles permettent aux clients internet d'accéder 
+au service FTP tout en maintenant la sécurité de la DMZ.
