@@ -28,3 +28,28 @@ configure terminal
 ip route 216.90.90.0 255.255.255.0 216.90.80.252
 ip route 216.90.100.0 255.255.255.0 216.90.80.252
 end
+
+
+// configuration du nat static pour le serveur public 
+
+enable
+configure terminal
+
+ip nat inside source static 10.0.0.3 216.90.80.253
+
+interface fastEthernet 0/0
+ip nat inside
+exit
+
+interface fastEthernet 1/0
+ip nat outside
+exit
+
+
+// nat dynamic PAT pour le reseau d'entreprise 
+
+access-list 1 permit 172.16.0.0 0.0.255.255
+
+ip nat inside source list 1 interface fastEthernet 1/0 overload
+
+end
