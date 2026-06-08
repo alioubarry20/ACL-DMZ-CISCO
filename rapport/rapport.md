@@ -1,10 +1,8 @@
 # Rapport de TP — ACL & DMZ
 
 **Étudiant :** Aliou Barry  
-**Niveau :** L1 SRT  
-**Module :** Architecture des Réseaux Sécurisés  
-**Encadrant :** M. Abdou DIOP  
-**École :** École Supérieure Polytechnique — Département Génie Informatique  
+**Niveau :** L2  
+**Module :** Architecture des Réseaux Sécurisés   
 **Année universitaire :** 2025-2026
 
 ---
